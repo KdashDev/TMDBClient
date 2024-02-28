@@ -13,27 +13,21 @@ import kotlinx.coroutines.launch
 class ArtistViewModel(
     private val getArtistsUseCase: GetArtistsUseCase,
     private val updateArtistsUseCase: UpdateArtistsUseCase
-): ViewModel() {
+) : ViewModel() {
 
     private val _artistList = MutableSharedFlow<List<Artist>?>()
-    val artistList : SharedFlow<List<Artist>?> = _artistList
-/*
-    fun getArtists() = liveData {
-        val artistList = getArtistsUseCase.execute()
-        emit(artistList)
-    }
-*/
-    suspend fun getArtists() {
+    val artistList: SharedFlow<List<Artist>?> = _artistList
+
+    private val _updateArtistList = MutableSharedFlow<List<Artist>?>()
+    val updateArtistList: SharedFlow<List<Artist>?> = _updateArtistList
+
+    suspend fun getArtists() =
         viewModelScope.launch {
             _artistList.emit(getArtistsUseCase.execute())
-
         }
-    }
 
-
-    fun updateArtists() = liveData {
-        val artistList = updateArtistsUseCase.execute()
-        emit(artistList)
-    }
-
+    suspend fun updateArtists() =
+        viewModelScope.launch {
+            _updateArtistList.emit(updateArtistsUseCase.execute())
+        }
 }

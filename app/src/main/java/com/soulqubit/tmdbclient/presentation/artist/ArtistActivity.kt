@@ -9,7 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.Lifecycle
@@ -45,7 +44,6 @@ class ArtistActivity : AppCompatActivity() {
         collectArtistFlows()
 
         initRecyclerView()
-
 
     }
 
@@ -87,9 +85,24 @@ class ArtistActivity : AppCompatActivity() {
         lifecycleScope.launch {
             // Repetir esta corrutina mientras el estado del ciclo de vida sea STARTED
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                artistViewModel.artistList.collect {
-                    Log.i("ARTTAG", "flow")
-                    displayPopularArtists(it)
+                launch {
+                    artistViewModel.artistList.collect {
+                        Log.i("ARTTAG", "flow")
+                        displayPopularArtists(it)
+                    }
+                }
+                launch {
+                    artistViewModel.updateArtistList.collect {
+                        Log.i("ARTTAG", "flow2")
+                        if (it != null) {
+                            Log.i("ARTTAG", "observed $it")
+                            adapter.setList(it)
+                            adapter.notifyDataSetChanged()
+                            binding.artistProgressBar.visibility = View.GONE
+                        } else {
+                            binding.artistProgressBar.visibility = View.GONE
+                        }
+                    }
                 }
             }
         }
@@ -124,25 +137,6 @@ class ArtistActivity : AppCompatActivity() {
 
     }
 
-
-    /*
-        private fun displayPopularArtists(){
-            Log.i("ARTTAG","artist activity display popular atrtist")
-            binding.artistProgressBar.visibility = View.VISIBLE
-            val responseLiveData = artistViewModel.getArtists()
-            responseLiveData.observe(this, Observer {
-                if(it!=null){
-                    Log.i("ARTTAG","observed ${it.toString()}")
-                    adapter.setList(it)
-                    adapter.notifyDataSetChanged()
-                    binding.artistProgressBar.visibility = View.GONE
-                }else{
-                    binding.artistProgressBar.visibility = View.GONE
-                    Toast.makeText(applicationContext,"No data available", Toast.LENGTH_LONG).show()
-                }
-            })
-        }
-    */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.update, menu)
@@ -163,16 +157,9 @@ class ArtistActivity : AppCompatActivity() {
 
     private fun updateTvShows() {
         binding.artistProgressBar.visibility = View.VISIBLE
-        val response = artistViewModel.updateArtists()
-        response.observe(this, Observer {
-            if (it != null) {
-                adapter.setList(it)
-                adapter.notifyDataSetChanged()
-                binding.artistProgressBar.visibility = View.GONE
-            } else {
-                binding.artistProgressBar.visibility = View.GONE
-            }
-        })
-    }
+        GlobalScope.launch(Dispatchers.IO) {
+            artistViewModel.updateArtists()
 
+        }
+    }
 }
