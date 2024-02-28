@@ -40,7 +40,16 @@ class ArtistActivity : AppCompatActivity() {
 
         artistViewModel = ViewModelProvider(this, factory)[ArtistViewModel::class.java]
 
+        lifeCycleHelper()
 
+        collectArtistFlows()
+
+        initRecyclerView()
+
+
+    }
+
+    private fun lifeCycleHelper() {
         lifecycle.addObserver(object : LifecycleObserver {
             @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
             fun onCreateEvent() {
@@ -72,9 +81,9 @@ class ArtistActivity : AppCompatActivity() {
                 Log.d("ARTTAG", "onDestroy")
             }
         })
+    }
 
-        initRecyclerView()
-
+    private fun collectArtistFlows() {
         lifecycleScope.launch {
             // Repetir esta corrutina mientras el estado del ciclo de vida sea STARTED
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -84,7 +93,6 @@ class ArtistActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 
 
