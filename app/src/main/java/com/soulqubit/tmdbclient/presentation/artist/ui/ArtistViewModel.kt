@@ -1,7 +1,6 @@
-package com.soulqubit.tmdbclient.presentation.artist
+package com.soulqubit.tmdbclient.presentation.artist.ui
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.soulqubit.tmdbclient.data.model.artist.Artist
 import com.soulqubit.tmdbclient.domain.usecase.GetArtistsUseCase
@@ -14,7 +13,6 @@ class ArtistViewModel(
     private val getArtistsUseCase: GetArtistsUseCase,
     private val updateArtistsUseCase: UpdateArtistsUseCase
 ) : ViewModel() {
-
     private val _artistList = MutableSharedFlow<List<Artist>?>()
     val artistList: SharedFlow<List<Artist>?> = _artistList
 

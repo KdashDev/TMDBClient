@@ -1,4 +1,4 @@
-package com.soulqubit.tmdbclient.presentation.artist
+package com.soulqubit.tmdbclient.presentation.artist.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

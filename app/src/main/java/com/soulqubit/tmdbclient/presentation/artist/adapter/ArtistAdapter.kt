@@ -1,4 +1,4 @@
-package com.soulqubit.tmdbclient.presentation.artist
+package com.soulqubit.tmdbclient.presentation.artist.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

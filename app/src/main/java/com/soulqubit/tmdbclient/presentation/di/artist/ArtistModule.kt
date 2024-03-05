@@ -2,7 +2,7 @@ package com.soulqubit.tmdbclient.presentation.di.artist
 
 import com.soulqubit.tmdbclient.domain.usecase.GetArtistsUseCase
 import com.soulqubit.tmdbclient.domain.usecase.UpdateArtistsUseCase
-import com.soulqubit.tmdbclient.presentation.artist.ArtistViewModelFactory
+import com.soulqubit.tmdbclient.presentation.artist.ui.ArtistViewModelFactory
 import dagger.Module
 import dagger.Provides
 
