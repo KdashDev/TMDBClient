@@ -31,7 +31,15 @@ class TvShowRepositoryImpl(
             val response = tvShowRemoteDatasource.getTvShows()
             val body = response.body()
             if (body != null) {
-                tvShowList = body.tvShows
+                tvShowList = body.tvShows.map { tvShow ->
+                    TvShow(
+                        firstAirDate = tvShow.firstAirDate ?: "",
+                        id = tvShow.id ?: 0,
+                        name = tvShow.firstAirDate ?: "",
+                        overview = tvShow.overview ?: "",
+                        posterPath = tvShow.posterPath ?: ""
+                    )
+                }
             }
         } catch (exception: Exception) {
             Log.i("MyTag", exception.message.toString())

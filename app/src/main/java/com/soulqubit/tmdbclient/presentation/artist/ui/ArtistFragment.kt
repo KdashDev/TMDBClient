@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 class ArtistFragment : Fragment() {
 
     companion object {
-        private  val TAG = ArtistFragment::class.java.simpleName
+        private val TAG = ArtistFragment::class.java.simpleName
     }
 
     @Inject
@@ -33,6 +33,7 @@ class ArtistFragment : Fragment() {
     private lateinit var adapter: ArtistAdapter
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (requireActivity().application as Injector).createArtistSubComponent()
@@ -90,11 +91,10 @@ class ArtistFragment : Fragment() {
         GlobalScope.launch(Dispatchers.IO) {
             artistViewModel.getArtists()
         }
-
     }
 
     private fun displayPopularArtists(artistList: List<Artist>?) {
-        Log.i("ARTTAG", "artist fragment display popular atrtist")
+        Log.i(TAG, "artist fragment display popular atrtist")
         binding.artistProgressBar.visibility = View.VISIBLE
         if (artistList != null) {
             Log.i(TAG, "observed $artistList")
@@ -109,7 +109,6 @@ class ArtistFragment : Fragment() {
                 Toast.LENGTH_LONG
             ).show()
         }
-
     }
 
 }

@@ -15,6 +15,9 @@ import com.soulqubit.tmdbclient.R
 import com.soulqubit.tmdbclient.databinding.ActivityTvShowBinding
 import com.soulqubit.tmdbclient.presentation.di.Injector
 import javax.inject.Inject
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 
 class TvShowActivity : AppCompatActivity() {
     @Inject
@@ -22,6 +25,7 @@ class TvShowActivity : AppCompatActivity() {
     private lateinit var tvShowViewModel: TvShowViewModel
     private lateinit var adapter: TvAdapter
     private lateinit var binding: ActivityTvShowBinding
+    private val compositeDisposable = CompositeDisposable()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_tv_show)
@@ -42,17 +46,19 @@ class TvShowActivity : AppCompatActivity() {
 
     private fun displayPopularTvShows(){
         binding.tvProgressBar.visibility = View.VISIBLE
-        val responseLiveData = tvShowViewModel.getTvShows()
-        responseLiveData.observe(this, Observer {
-            if(it!=null){
-                adapter.setList(it)
-                adapter.notifyDataSetChanged()
-                binding.tvProgressBar.visibility = View.GONE
-            }else{
-                binding.tvProgressBar.visibility = View.GONE
-                Toast.makeText(applicationContext,"No data available", Toast.LENGTH_LONG).show()
+
+        tvShowViewModel.getTvShows().observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                if(it!=null){
+                    adapter.setList(it)
+                    adapter.notifyDataSetChanged()
+                    binding.tvProgressBar.visibility = View.GONE
+                }else{
+                    binding.tvProgressBar.visibility = View.GONE
+                    Toast.makeText(applicationContext,"No data available", Toast.LENGTH_LONG).show()
+                }
             }
-        })
+            .addTo(compositeDisposable)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

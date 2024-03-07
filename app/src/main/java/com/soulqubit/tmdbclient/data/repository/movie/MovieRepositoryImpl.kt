@@ -31,7 +31,15 @@ class MovieRepositoryImpl(
             val response = movieRemoteDatasource.getMovies()
             val body = response.body()
             if (body != null) {
-                movieList = body.movies
+                movieList = body.movies.map { movie ->
+                    Movie(
+                        id = movie.id ?: 0,
+                        overview = movie.overview ?: "",
+                        posterPath = movie.posterPath ?: "",
+                        releaseDate = movie.releaseDate ?: "",
+                        title = movie.title ?: ""
+                    )
+                }
             }
         } catch (exception: Exception) {
             Log.i("MyTag", exception.message.toString())
