@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">TMDBClient</string>
+    <string name="message_artist">* Diseño modular, coorutinas, flows</string>
+    <string name="message_movie">* Diseño tradicional,  Live Data</string>
+    <string name="message_tv_show">* Diseño tradicional, coorutinas, flows, RX java</string>
+    <string name="text_artist">Artists</string>
+    <string name="text_movie">Movies</string>
+    <string name="text_tv_show">Tv Shows</string>
+    <string name="no_data_available">No data available</string>
 </resources>

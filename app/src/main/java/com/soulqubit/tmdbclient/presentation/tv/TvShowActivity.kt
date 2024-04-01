@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.soulqubit.tmdbclient.R
 import com.soulqubit.tmdbclient.databinding.ActivityTvShowBinding
+import com.soulqubit.tmdbclient.presentation.artist.ui.ArtistFragment
 import com.soulqubit.tmdbclient.presentation.di.Injector
 import javax.inject.Inject
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,6 +21,11 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 
 class TvShowActivity : AppCompatActivity() {
+
+    companion object {
+        private val TAG = TvShowActivity::class.java.simpleName
+    }
+
     @Inject
     lateinit var factory: TvShowViewModelFactory
     private lateinit var tvShowViewModel: TvShowViewModel
@@ -55,7 +61,7 @@ class TvShowActivity : AppCompatActivity() {
                     binding.tvProgressBar.visibility = View.GONE
                 }else{
                     binding.tvProgressBar.visibility = View.GONE
-                    Toast.makeText(applicationContext,"No data available", Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext,R.string.no_data_available, Toast.LENGTH_LONG).show()
                 }
             }
             .addTo(compositeDisposable)

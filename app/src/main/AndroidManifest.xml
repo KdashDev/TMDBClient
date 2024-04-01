@@ -12,16 +12,19 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TMDBClient"
+        android:theme="@style/Theme.App.Starting"
         tools:targetApi="31">
         <activity
             android:name="com.soulqubit.tmdbclient.presentation.tv.TvShowActivity"
+            android:theme="@style/Theme.SplashScreenDemo"
             android:exported="false" />
         <activity
             android:name="com.soulqubit.tmdbclient.presentation.movie.MovieActivity"
+            android:theme="@style/Theme.SplashScreenDemo"
             android:exported="false" />
         <activity
             android:name="com.soulqubit.tmdbclient.presentation.artist.ArtistActivity"
+            android:theme="@style/Theme.SplashScreenDemo"
             android:exported="false" />
         <activity
             android:name="com.soulqubit.tmdbclient.presentation.HomeActivity"

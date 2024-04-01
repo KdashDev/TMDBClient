@@ -14,14 +14,6 @@ class TvShowViewModel(
     private val getTvShowsUseCase: GetTvShowsUseCase,
     private val updateTvShowsUseCase: UpdateTvShowsUseCase
 ) : ViewModel() {
-
-    /*
- fun getTvShows() = liveData {
-     val tvShowList = getTvShowsUseCase.execute()
-     emit(tvShowList)
- }
-*/
-
     fun getTvShows(): Observable<List<TvShow>> {
         return Observable.create { emitter ->
             GlobalScope.launch(Dispatchers.IO) {
@@ -39,8 +31,8 @@ class TvShowViewModel(
     }
 
 
- fun updateTvShows() = liveData {
-     val tvShowList = updateTvShowsUseCase.execute()
-     emit(tvShowList)
- }
+    fun updateTvShows() = liveData {
+        val tvShowList = updateTvShowsUseCase.execute()
+        emit(tvShowList)
+    }
 }

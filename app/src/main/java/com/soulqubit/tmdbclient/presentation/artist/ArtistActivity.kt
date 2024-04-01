@@ -18,7 +18,6 @@ class ArtistActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityArtistBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment
         // Instantiate the navController using the NavHostFragment

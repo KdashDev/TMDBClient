@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.soulqubit.tmdbclient.R
 import com.soulqubit.tmdbclient.data.model.artist.Artist
 import com.soulqubit.tmdbclient.databinding.FragmentArtistBinding
 import com.soulqubit.tmdbclient.presentation.artist.adapter.ArtistAdapter
@@ -58,7 +59,6 @@ class ArtistFragment : Fragment() {
 
     private fun collectArtistFlows() {
         lifecycleScope.launch {
-            // Repetir esta corrutina mientras el estado del ciclo de vida sea STARTED
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     artistViewModel.artistList.collect {
@@ -82,7 +82,6 @@ class ArtistFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        Log.i(TAG, "artist fragment init recycler view")
         binding.artistRecyclerView.layoutManager =
             LinearLayoutManager(requireContext().applicationContext)
         adapter = ArtistAdapter()
@@ -94,7 +93,6 @@ class ArtistFragment : Fragment() {
     }
 
     private fun displayPopularArtists(artistList: List<Artist>?) {
-        Log.i(TAG, "artist fragment display popular atrtist")
         binding.artistProgressBar.visibility = View.VISIBLE
         if (artistList != null) {
             Log.i(TAG, "observed $artistList")
@@ -105,7 +103,7 @@ class ArtistFragment : Fragment() {
             binding.artistProgressBar.visibility = View.GONE
             Toast.makeText(
                 requireContext().applicationContext,
-                "No data available",
+                R.string.no_data_available,
                 Toast.LENGTH_LONG
             ).show()
         }

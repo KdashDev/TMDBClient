@@ -18,6 +18,10 @@ import com.soulqubit.tmdbclient.presentation.di.Injector
 import javax.inject.Inject
 
 class MovieActivity : AppCompatActivity() {
+    companion object {
+        private val TAG = MovieActivity::class.java.simpleName
+    }
+
     @Inject
     lateinit var factory: MovieViewModelFactory
     private lateinit var movieViewModel: MovieViewModel
@@ -32,7 +36,7 @@ class MovieActivity : AppCompatActivity() {
             .get(MovieViewModel::class.java)
         val responseLiveData = movieViewModel.getMovies()
         responseLiveData.observe(this, Observer {
-            Log.i("MYTAG", it.toString())
+            Log.i(TAG, it.toString())
         })
         initRecyclerView()
 
@@ -55,7 +59,10 @@ class MovieActivity : AppCompatActivity() {
                 binding.movieProgressBar.visibility = View.GONE
             } else {
                 binding.movieProgressBar.visibility = View.GONE
-                Toast.makeText(applicationContext, "No data available", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.no_data_available), Toast.LENGTH_LONG
+                ).show()
             }
         })
     }
@@ -73,6 +80,7 @@ class MovieActivity : AppCompatActivity() {
                 updateMovies()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
 
