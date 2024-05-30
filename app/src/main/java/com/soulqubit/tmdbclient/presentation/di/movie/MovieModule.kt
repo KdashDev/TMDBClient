@@ -6,6 +6,7 @@ import com.soulqubit.tmdbclient.presentation.movie.MovieViewModelFactory
 import dagger.Module
 import dagger.Provides
 
+
 @Module
 class MovieModule {
     @MovieScope

@@ -7,10 +7,10 @@ import com.soulqubit.tmdbclient.domain.usecase.UpdateMoviesUsecase
 
 class MovieViewModelFactory(
     private val getMoviesUseCase: GetMoviesUseCase,
-    private val updateMoviesUsecase: UpdateMoviesUsecase
+    private val updateMoviesUseCase: UpdateMoviesUsecase
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return MovieViewModel(getMoviesUseCase,updateMoviesUsecase) as T
+        return MovieViewModel(getMoviesUseCase,updateMoviesUseCase) as T
     }
 }
 

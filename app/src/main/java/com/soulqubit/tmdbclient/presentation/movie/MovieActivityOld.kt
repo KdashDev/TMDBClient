@@ -1,25 +1,25 @@
 package com.soulqubit.tmdbclient.presentation.movie
 
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.ui.Modifier
-
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.soulqubit.tmdbclient.R
 import com.soulqubit.tmdbclient.databinding.ActivityMovieBinding
 import com.soulqubit.tmdbclient.presentation.di.Injector
-import com.soulqubit.tmdbclient.presentation.movie.theme.ComposeNavDemoTheme
 import javax.inject.Inject
 
-class MovieActivity : ComponentActivity(){
+class MovieActivityOld : AppCompatActivity() {
     companion object {
-        private val TAG = MovieActivity::class.java.simpleName
+        private val TAG = MovieActivityOld::class.java.simpleName
     }
 
     @Inject
@@ -29,26 +29,21 @@ class MovieActivity : ComponentActivity(){
     private lateinit var adapter: MovieAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //binding = DataBindingUtil.setContentView(this, R.layout.activity_movie)
+        /*
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie)
         (application as Injector).createMovieSubComponent()
             .inject(this)
         movieViewModel = ViewModelProvider(this, factory)
             .get(MovieViewModel::class.java)
+        val responseLiveData = movieViewModel.getMovies()
+        responseLiveData.observe(this, Observer {
+            Log.i(TAG, it.toString())
+        })
+         */
+        initRecyclerView()
 
-        setContent {
-            ComposeNavDemoTheme {
-
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    DemoAppNavHost(movieViewModel)
-                }
-            }
-        }
     }
-/*
+
     private fun initRecyclerView() {
         binding.movieRecyclerView.layoutManager = LinearLayoutManager(this)
         adapter = MovieAdapter()
@@ -57,6 +52,7 @@ class MovieActivity : ComponentActivity(){
     }
 
     private fun displayPopularMovies() {
+        /*
         binding.movieProgressBar.visibility = View.VISIBLE
         val responseLiveData = movieViewModel.getMovies()
         responseLiveData.observe(this, Observer {
@@ -72,6 +68,8 @@ class MovieActivity : ComponentActivity(){
                 ).show()
             }
         })
+
+         */
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -106,6 +104,4 @@ class MovieActivity : ComponentActivity(){
             }
         })
     }
-
-    */
 }
